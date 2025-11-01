@@ -19,16 +19,27 @@ public final class WoolWarsUtilities extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        BukkitVoicechatService service = getServer().getServicesManager().load(BukkitVoicechatService.class);
-        if (service != null) {
-            voicechatPlugin = new VoicechatImpl();
-            service.registerPlugin(voicechatPlugin);
-            LOGGER.info("Successfully registered woolwars voicegroup plugin");
+        saveDefaultConfig();
+        if (getConfig().getBoolean("voice-chat")) {
+            if (!getServer().getPluginManager().isPluginEnabled("voicechat")) {
+                getLogger().severe("voicechat not found! Disabling...");
+                getServer().getPluginManager().disablePlugin(this);
+            } else {
+                BukkitVoicechatService service = getServer().getServicesManager().load(BukkitVoicechatService.class);
+                if (service != null) {
+                    voicechatPlugin = new VoicechatImpl();
+                    service.registerPlugin(voicechatPlugin);
+                    LOGGER.info("Successfully registered woolwars voicegroup plugin");
+                } else {
+                    LOGGER.info("Failed to register woolwars voicegroup plugin");
+                }
+            }
         } else {
-            LOGGER.info("Failed to register woolwars voicegroup plugin");
+            LOGGER.info("Voicechat addon is not enabled in your config. If you need that function, please edit your config.");
         }
+
         if (!getServer().getPluginManager().isPluginEnabled("WoolWars")) {
-            getLogger().severe("Dependencies not found! Disabling...");
+            getLogger().severe("WoolWars not found! Disabling...");
             getServer().getPluginManager().disablePlugin(this);
         }
         getServer().getPluginManager().registerEvents(new GameStateListener(), this);
@@ -44,4 +55,5 @@ public final class WoolWarsUtilities extends JavaPlugin {
     public static WoolWarsUtilities getInstance() {
         return instance;
     }
+
 }

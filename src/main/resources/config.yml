@@ -1,0 +1,9 @@
+# This plugin is for Wool Wars by Pixel Studios. Portability for other plugins is not guaranteed.
+# You can check new updates at https://github.com/ImCZFy/WoolWars-Utilities.
+
+
+
+# Switch to enable / disable voice group function (assign voice groups automatically when a game is started and auto delete groups when a game is ended.)
+# Depending on voicechat plugin for server, and SimpleVoiceChat Mod for clients.
+voice-group: true
+voice-group-console-log: true

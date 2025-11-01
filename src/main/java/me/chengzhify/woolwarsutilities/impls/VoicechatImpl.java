@@ -15,6 +15,8 @@ import static org.apache.logging.log4j.LogManager.getLogger;
 
 public class VoicechatImpl implements VoicechatPlugin {
     public static VoicechatServerApi voiceServerApi;
+    private static final WoolWarsUtilities instance = WoolWarsUtilities.getInstance();
+    private static final boolean voiceLog = instance.getConfig().getBoolean("voice-group-console-log");
     @Override
     public String getPluginId() {
         return WoolWarsUtilities.PLUGIN_ID;
@@ -41,13 +43,17 @@ public class VoicechatImpl implements VoicechatPlugin {
     }
 
     public static UUID createGroup(String name, String team) {
+        String randomPassword = UUID.randomUUID().toString();
         Group g = voiceServerApi.groupBuilder()
                 .setPersistent(true)
                 .setName(name + team) // The name of the group
-                .setPassword("IWontTellYouThePasswordUnlessYouFindItOnYouOwn")
+                .setPassword(randomPassword)
                 .setType(Group.Type.ISOLATED)
                 .build();
-        getLogger().info("[WoolWars - VoiceGroup] 竞技场语音队伍已创建");
+        if (voiceLog) {
+            getLogger().info("[WoolWars - VoiceGroup] " + name + team + " 语音组已创建");
+            getLogger().info("[WoolWars - VoiceGroup] " + name + team + " 语音组密码: " + randomPassword);
+        }
         return g.getId();
     }
 
