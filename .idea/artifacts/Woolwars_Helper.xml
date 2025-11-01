@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Woolwars-Helper">
+    <output-path>$PROJECT_DIR$/out/artifacts/Woolwars_Helper</output-path>
+    <root id="archive" name="Woolwars-Helper.jar">
+      <element id="module-output" name="WoolWars-Utilities" />
+    </root>
+  </artifact>
+</component>

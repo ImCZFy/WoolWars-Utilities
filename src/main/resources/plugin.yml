@@ -1,0 +1,7 @@
+name: WoolWars-Utilities
+version: '1.0-SNAPSHOT'
+main: me.chengzhify.woolwarsutilities.WoolWarsUtilities
+api-version: '1.21'
+authors: [ ChengZhiFy ]
+depend: [WoolWars, voicechat]
+description: Utilities for WoolWars
