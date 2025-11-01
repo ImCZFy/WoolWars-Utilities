@@ -136,9 +136,9 @@ public class LevelManager {
         StringBuilder bar = new StringBuilder();
         for (int i = 0; i < totalBars; i++) {
             if (i < progressBars) {
-                bar.append("&b█"); // 已获得经验
+                bar.append("&b■");
             } else {
-                bar.append("&7█"); // 未获得经验
+                bar.append("&7■");
             }
         }
         return bar.toString();

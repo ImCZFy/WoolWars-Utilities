@@ -9,7 +9,7 @@ public class LevelPlaceholder extends PlaceholderExpansion {
 
     @Override
     public String getIdentifier() {
-        return "woolwars_utilities";
+        return "woolwarsutilities";
     }
 
 
@@ -39,13 +39,13 @@ public class LevelPlaceholder extends PlaceholderExpansion {
                 return LevelFormatter.getColoredLevel(data.getLevel());
             case "exp":
                 return String.valueOf(data.getExp());
-            case "next_exp":
+            case "nextexp":
                 return String.valueOf(data.getExpToNextLevel(data.getLevel()));
-            case "progress_bar": {
+            case "progressbar": {
                 int expToNext = data.getExpToNextLevel(data.getLevel());
                 return LevelManager.getProgressBar(data.getExp(), expToNext, 10);
             }
-            case "progress_percent": {
+            case "progresspercent": {
                 int expToNext = data.getExpToNextLevel(data.getLevel());
                 double percent = (double) data.getExp() / expToNext * 100.0;
                 return String.format("%.1f%%", percent);

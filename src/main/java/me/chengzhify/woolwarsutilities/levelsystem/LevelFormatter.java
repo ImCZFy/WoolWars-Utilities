@@ -18,13 +18,14 @@ public class LevelFormatter {
 
     public static void loadColors(JavaPlugin plugin) {
         colorRanges.clear();
-        ConfigurationSection section = plugin.getConfig().getConfigurationSection("level-colors");
+        ConfigurationSection section = plugin.getConfig().getConfigurationSection("level-system.level-colors");
         if (section == null) return;
         for (String key : section.getKeys(false)) {
             colorRanges.put(key, section.getString(key));
         }
         plugin.getLogger().info("[WoolWars-Utilities, Level System] Loaded " + colorRanges.size() + " color ranges.");
     }
+
 
 
     public static String getColoredLevel(int level) {
@@ -38,22 +39,21 @@ public class LevelFormatter {
                 int min = Integer.parseInt(split[0]);
                 int max = Integer.parseInt(split[1]);
                 if (level >= min && level <= max) {
-                    return ChatColor.translateAlternateColorCodes('&', colorCode + "[" + level + icon + "]");
+                    return ChatColor.translateAlternateColorCodes('&', colorCode + level + icon);
                 }
             } else if (range.endsWith("+")) {
                 int min = Integer.parseInt(range.replace("+", ""));
                 if (level >= min) {
                     if ("rainbow".equalsIgnoreCase(colorCode)) {
-                        return getRainbow("[" + level + icon + "]");
+                        return getRainbow(level + icon);
                     } else {
-                        return ChatColor.translateAlternateColorCodes('&', colorCode + "[" + level + icon + "]");
+                        return ChatColor.translateAlternateColorCodes('&', colorCode + level + icon);
                     }
                 }
             }
         }
-        return ChatColor.GRAY + "[" + level + icon + "]";
+        return ChatColor.GRAY + "" + level + icon;
     }
-
 
     private static String getRainbow(String text) {
         ChatColor[] colors = {

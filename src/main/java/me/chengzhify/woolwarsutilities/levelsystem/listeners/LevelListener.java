@@ -26,6 +26,9 @@ public class LevelListener implements Listener {
             LevelManager.addExp(player, 100);
             player.sendMessage("§b+100 经验 (游戏胜利)");
         });
+        event.getArena().getPlayers().forEach(user -> {
+            LevelManager.asyncSavePlayer(user.getPlayer());
+        });
     }
 
     @EventHandler
