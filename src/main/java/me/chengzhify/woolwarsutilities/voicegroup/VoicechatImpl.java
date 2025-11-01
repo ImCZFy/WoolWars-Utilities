@@ -1,4 +1,4 @@
-package me.chengzhify.woolwarsutilities.impls;
+package me.chengzhify.woolwarsutilities.voicegroup;
 
 import de.maxhenkel.voicechat.api.Group;
 import de.maxhenkel.voicechat.api.VoicechatApi;

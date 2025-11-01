@@ -1,4 +1,4 @@
-package me.chengzhify.woolwarsutilities.listeners;
+package me.chengzhify.woolwarsutilities.voicegroup.listeners;
 
 import de.maxhenkel.voicechat.api.Group;
 import de.maxhenkel.voicechat.api.VoicechatConnection;
@@ -6,8 +6,8 @@ import dev.pixelstudios.woolwars.api.events.arena.GameEndEvent;
 import dev.pixelstudios.woolwars.api.events.arena.GameStartEvent;
 import dev.pixelstudios.woolwars.arena.data.Team;
 import dev.pixelstudios.woolwars.storage.user.User;
-import me.chengzhify.woolwarsutilities.impls.VoicechatImpl;
 import me.chengzhify.woolwarsutilities.WoolWarsUtilities;
+import me.chengzhify.woolwarsutilities.voicegroup.VoicechatImpl;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
