@@ -126,9 +126,9 @@
         <dependency>
             <groupId>dev.pixelstudios</groupId>
             <artifactId>woolwars</artifactId>
-            <version>1.9.1</version>
+            <version>1.10.0</version>
             <scope>system</scope>
-            <systemPath>D:/Minecraft/WoolWars/plugins/WoolWars-1.9.1.jar</systemPath>
+            <systemPath>D:/Minecraft/WoolWars/plugins/WoolWars-1.10.0.jar</systemPath>
         </dependency>
 
         <dependency>

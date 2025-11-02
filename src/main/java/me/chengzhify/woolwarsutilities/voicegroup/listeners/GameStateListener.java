@@ -33,11 +33,11 @@ public class GameStateListener implements Listener {
 
         List<Team> teams = event.getArena().getTeams();
         for (Team team : teams) {
-            UUID groupId = VoicechatImpl.createGroup(event.getArena().getWorld().getName(), team.getName());
+            UUID groupId = VoicechatImpl.createGroup(event.getArena().getWorld().getName(), team.getProperties().getName());
             Group group = VoicechatImpl.voiceServerApi.getGroup(groupId);
-            teamGroups.put(event.getArena().getWorld().getName() + team.getName(), groupId);
+            teamGroups.put(event.getArena().getWorld().getName() + team.getProperties().getName(), groupId);
             Bukkit.getScheduler().runTask(WoolWarsUtilities.getInstance(), () -> {
-                if (voiceLog) instance.getLogger().info("队伍 " + event.getArena().getWorld().getName() + team.getName() + " 成员数量: " + team.getMembers().size());
+                if (voiceLog) instance.getLogger().info("队伍 " + event.getArena().getWorld().getName() + team.getProperties().getName() + " 成员数量: " + team.getMembers().size());
                 for (User member : team.getMembers()) {
                     VoicechatConnection connection = VoicechatImpl.voiceServerApi.getConnectionOf(member.getUniqueId());
                     if (connection == null) {
@@ -46,8 +46,8 @@ public class GameStateListener implements Listener {
                     }
 
                     connection.setGroup(group);
-                    if (voiceLog) instance.getLogger().info("[WoolWars - VoiceGroup] 已将 " + member.getName() + " 分配至语音组 " + event.getArena().getWorld().getName() + team.getName());
-                    member.send("§a已将你分配至 §b" + team.getName() + " §a语音组, 游戏结束后将自动退出!");
+                    if (voiceLog) instance.getLogger().info("[WoolWars - VoiceGroup] 已将 " + member.getName() + " 分配至语音组 " + event.getArena().getWorld().getName() + team.getProperties().getName());
+                    member.send("§a已将你分配至 §b" + team.getProperties().getName() + " §a语音组, 游戏结束后将自动退出!");
                 }
             });
         }
@@ -64,7 +64,7 @@ public class GameStateListener implements Listener {
 
         List<Team> teams = event.getArena().getTeams();
         for (Team team : teams) {
-            UUID groupId = teamGroups.get(team.getName());
+            UUID groupId = teamGroups.get(team.getProperties().getName());
             if (groupId == null) continue;
 
             Group group = VoicechatImpl.voiceServerApi.getGroup(groupId);
@@ -80,7 +80,7 @@ public class GameStateListener implements Listener {
             }
 
             VoicechatImpl.voiceServerApi.removeGroup(group.getId());
-            if (voiceLog) instance.getLogger().info("[WoolWars - VoiceGroup] 队伍 " + event.getArena().getWorld().getName() + team.getName() + " 的语音组已删除。");
+            if (voiceLog) instance.getLogger().info("[WoolWars - VoiceGroup] 队伍 " + event.getArena().getWorld().getName() + team.getProperties().getName() + " 的语音组已删除。");
         }
 
         if (voiceLog) instance.getLogger().info("[WoolWars - VoiceGroup] 竞技场 " + event.getArena().getWorld().getName() + " 的所有队伍语音组删除完毕。");

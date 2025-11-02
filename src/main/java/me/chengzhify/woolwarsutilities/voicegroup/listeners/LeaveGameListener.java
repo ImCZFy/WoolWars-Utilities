@@ -31,8 +31,8 @@ public class LeaveGameListener implements Listener {
         Bukkit.getScheduler().runTask(getInstance(), () -> {
             for (Team team : teams) {
                 if (team.getMembers().isEmpty()) {
-                    if (voiceLog) getInstance().getLogger().info("[WoolWars - VoiceGroup] 队伍 " + event.getArena().getWorld().getName() + team.getName() + " 的语音组所有人已退出, 已删除该语音组。");
-                    UUID groupId = GameStateListener.teamGroups.get(event.getArena().getWorld().getName() + team.getName());
+                    if (voiceLog) getInstance().getLogger().info("[WoolWars - VoiceGroup] 队伍 " + event.getArena().getWorld().getName() + team.getProperties().getName() + " 的语音组所有人已退出, 已删除该语音组。");
+                    UUID groupId = GameStateListener.teamGroups.get(event.getArena().getWorld().getName() + team.getProperties().getName());
                     VoicechatImpl.voiceServerApi.removeGroup(groupId);
                 }
             }
