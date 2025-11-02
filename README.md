@@ -12,24 +12,25 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 简介
 
-**WoolWars Utilities** 是一款专为 **[羊毛战争（WoolWars）](https://www.spigotmc.org/resources/wool-wars-%E2%AD%95-custom-kits-and-abilities-%E2%AD%90-power-ups-%E2%AD%90-jump-pads-%E2%AD%90-portals-%E2%9C%85-1-8-1-21-10.105548/)** 设计的工具插件，依赖于 **WoolWars**, **PlaceholderAPI**, **voicechat（可选）** 插件。
-
+- **WoolWars Utilities** 是一款专为 **羊毛战争（WoolWars)** 设计的工具插件，依赖于 **WoolWars**, **PlaceholderAPI**, **voicechat（可选）** 插件。
+- **部分代码由 AI 辅助实现，请自行辨别。**
+- 本仓库**不提供** WoolWars 插件下载，请前往 [SpigotMC]((https://www.spigotmc.org/resources/wool-wars-%E2%AD%95-custom-kits-and-abilities-%E2%AD%90-power-ups-%E2%AD%90-jump-pads-%E2%AD%90-portals-%E2%9C%85-1-8-1-21-10.105548/)), [PolyMart](https://polymart.org/product/2551/wool-wars-1-8-1-21-10), [BuiltByBit](https://builtbybit.com/resources/wool-wars-lets-battle-for-the-wool.25971/) 购买本体插件！
 ---
 
 ## 功能
 
 - **玩家等级系统**
-    - 每位玩家拥有独立的等级和经验
-    - 等级经验值自动计算到下一等级所需经验
-    - 支持显示进度条
-    - 等级信息可用颜色代码渲染
+    - 每位玩家拥有独立的等级和经验。
+    - 等级经验值自动计算到下一等级所需经验。
+    - 支持显示进度条。
+    - 等级信息可用颜色代码渲染。
     - 玩家数据异步加载，确保服务器主线程不卡顿。
     - 支持回调函数，命令执行完毕后可直接显示玩家数据。
 
 - **游戏内语音分配**
-  - 进入游戏自动分配队伍语音组
-  - 退出游戏自动离开队伍语音组
-  - 游戏结束自动删除队伍语音组
+  - 进入游戏自动分配队伍语音组。
+  - 退出游戏自动离开队伍语音组。
+  - 游戏结束自动删除队伍语音组。
 
 
 - **MySQL 数据库支持**
