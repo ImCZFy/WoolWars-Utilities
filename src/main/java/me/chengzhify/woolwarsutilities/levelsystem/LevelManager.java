@@ -175,7 +175,7 @@ public class LevelManager {
         if (data.getLevel() > before) {
             LevelData finalData = data;
             Bukkit.getScheduler().runTask(WoolWarsUtilities.getInstance(), () -> {
-                player.sendMessage("§aYou leveled up! New: " + LevelFormatter.getColoredLevel(finalData.getLevel()));
+                player.sendMessage("§a已升级! 你现在的等级为 " + LevelFormatter.getColoredLevel(finalData.getLevel()));
             });
         }
     }
