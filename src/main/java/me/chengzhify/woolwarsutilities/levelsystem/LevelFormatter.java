@@ -55,6 +55,34 @@ public class LevelFormatter {
         return ChatColor.GRAY + "" + level + icon;
     }
 
+
+    public static String getColoredLevelWithFrame(int level) {
+        for (Map.Entry<String, String> entry : colorRanges.entrySet()) {
+            String range = entry.getKey();
+            String colorCode = entry.getValue();
+
+
+            if (range.contains("-")) {
+                String[] split = range.split("-");
+                int min = Integer.parseInt(split[0]);
+                int max = Integer.parseInt(split[1]);
+                if (level >= min && level <= max) {
+                    return ChatColor.translateAlternateColorCodes('&', colorCode + "[" + level + icon + "]");
+                }
+            } else if (range.endsWith("+")) {
+                int min = Integer.parseInt(range.replace("+", ""));
+                if (level >= min) {
+                    if ("rainbow".equalsIgnoreCase(colorCode)) {
+                        return getRainbow("[" + level + icon + "]");
+                    } else {
+                        return ChatColor.translateAlternateColorCodes('&', colorCode + "[" + level + icon + "]");
+                    }
+                }
+            }
+        }
+        return ChatColor.GRAY + "[" + level + icon + "]";
+    }
+
     private static String getRainbow(String text) {
         ChatColor[] colors = {
                 ChatColor.RED, ChatColor.GOLD, ChatColor.YELLOW,

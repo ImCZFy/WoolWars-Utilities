@@ -35,6 +35,7 @@ public class LevelPlaceholder extends PlaceholderExpansion {
             case "level":
                 return String.valueOf(data.getLevel());
             case "rank":
+                return LevelFormatter.getColoredLevelWithFrame(data.getLevel());
             case "star":
                 return LevelFormatter.getColoredLevel(data.getLevel());
             case "exp":

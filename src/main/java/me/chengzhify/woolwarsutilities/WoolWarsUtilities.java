@@ -1,6 +1,7 @@
 package me.chengzhify.woolwarsutilities;
 
 import de.maxhenkel.voicechat.api.BukkitVoicechatService;
+import me.chengzhify.woolwarsutilities.commands.MainCommand;
 import me.chengzhify.woolwarsutilities.levelsystem.LevelFormatter;
 import me.chengzhify.woolwarsutilities.levelsystem.LevelManager;
 import me.chengzhify.woolwarsutilities.levelsystem.LevelPlaceholder;
@@ -82,6 +83,7 @@ public final class WoolWarsUtilities extends JavaPlugin {
             }
             getServer().getPluginManager().registerEvents(new LevelListener(), this);
             getCommand("wwlevel").setExecutor(new LevelCommand());
+            getCommand("wwu").setExecutor(new MainCommand());
         }
     }
 
