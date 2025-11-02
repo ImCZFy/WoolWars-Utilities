@@ -2,11 +2,10 @@ package me.chengzhify.woolwarsutilities.levelsystem;
 
 import me.chengzhify.woolwarsutilities.WoolWarsUtilities;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.UUID;
 
 public class MySQLManager {
     private static Connection connection;
@@ -33,6 +32,106 @@ public class MySQLManager {
     public static Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) throw new SQLException("MySQL not connected");
         return connection;
+    }
+
+    public static boolean playerExists(UUID uuid) {
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                     "SELECT 1 FROM woolwars_levels WHERE uuid = ? LIMIT 1")) {
+            stmt.setString(1, uuid.toString());
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean playerExists(String name) {
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                     "SELECT 1 FROM woolwars_levels WHERE name = ? LIMIT 1")) {
+            stmt.setString(1, name);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static String getPlayerName(String name) {
+        String query = "SELECT name FROM player_levels WHERE name = ? LIMIT 1";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, name);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("name");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getPlayerName(UUID uuid) {
+        String query = "SELECT name FROM player_levels WHERE uuid = ? LIMIT 1";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, uuid != null ? uuid.toString() : "");
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("name");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static UUID getPlayerUUID(UUID uuid) {
+        String query = "SELECT uuid FROM player_levels WHERE uuid = ? LIMIT 1";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, uuid != null ? uuid.toString() : "");
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return UUID.fromString(rs.getString("uuid"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static UUID getPlayerUUID(String name) {
+        String query = "SELECT uuid FROM player_levels WHERE name = ? LIMIT 1";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, name);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return UUID.fromString(rs.getString("uuid"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

@@ -5,3 +5,8 @@ api-version: '1.21'
 authors: [ ChengZhiFy ]
 depend: [WoolWars, voicechat, PlaceholderAPI]
 description: Utilities for WoolWars by Pixel Studios.
+commands:
+  wwlevel:
+    aliases:
+      - woolwarslevel
+      - wwl

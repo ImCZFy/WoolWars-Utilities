@@ -30,6 +30,27 @@ public class LevelData {
         }
     }
 
+    public void addLevel(int amount) {
+        level += amount;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setExp(int exp) {
+        if (exp <= getExpToNextLevel(level)) {
+            this.exp = exp;
+        } else {
+            setExp(0);
+            addExp(exp);
+        }
+    }
+
+    public void reset() {
+        this.level = 0;
+        this.exp = 0;
+    }
 
     public int getExpToNextLevel(int level) {
         if (level <= 10) return 500;

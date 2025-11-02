@@ -42,6 +42,29 @@ public class LevelManager {
         });
     }
 
+    public static void asyncLoadPlayer(UUID uuid, String name) {
+        Bukkit.getScheduler().runTaskAsynchronously(WoolWarsUtilities.getInstance(), () -> {
+            try {
+                var conn = MySQLManager.getConnection();
+                PreparedStatement ps = conn.prepareStatement("SELECT * FROM woolwars_levels WHERE uuid = ?");
+                ps.setString(1, uuid.toString());
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    int level = rs.getInt("level");
+                    int exp = rs.getInt("exp");
+                    cache.put(uuid, new LevelData(level, exp));
+                } else {
+                    cache.put(uuid, new LevelData(1, 0));
+                    PreparedStatement insert = conn.prepareStatement("INSERT INTO woolwars_levels (uuid,name,level,exp) VALUES (?,?,1,0)");
+                    insert.setString(1, uuid.toString());
+                    insert.setString(2, name);
+                    insert.executeUpdate();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
     public static void asyncSavePlayer(Player player) {
         UUID uuid = player.getUniqueId();
@@ -54,6 +77,24 @@ public class LevelManager {
                 ps.setInt(1, data.getLevel());
                 ps.setInt(2, data.getExp());
                 ps.setString(3, player.getName());
+                ps.setString(4, uuid.toString());
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public static void asyncSavePlayer(UUID uuid, String name) {
+        LevelData data = cache.get(uuid);
+        if (data == null) return;
+        Bukkit.getScheduler().runTaskAsynchronously(WoolWarsUtilities.getInstance(), () -> {
+            try {
+                var conn = MySQLManager.getConnection();
+                PreparedStatement ps = conn.prepareStatement("UPDATE woolwars_levels SET level=?, exp=?, name=? WHERE uuid=?");
+                ps.setInt(1, data.getLevel());
+                ps.setInt(2, data.getExp());
+                ps.setString(3, name);
                 ps.setString(4, uuid.toString());
                 ps.executeUpdate();
             } catch (SQLException e) {

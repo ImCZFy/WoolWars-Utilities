@@ -5,6 +5,7 @@ import me.chengzhify.woolwarsutilities.levelsystem.LevelFormatter;
 import me.chengzhify.woolwarsutilities.levelsystem.LevelManager;
 import me.chengzhify.woolwarsutilities.levelsystem.LevelPlaceholder;
 import me.chengzhify.woolwarsutilities.levelsystem.MySQLManager;
+import me.chengzhify.woolwarsutilities.levelsystem.commands.LevelCommand;
 import me.chengzhify.woolwarsutilities.levelsystem.listeners.LevelListener;
 import me.chengzhify.woolwarsutilities.voicegroup.VoicechatImpl;
 import me.chengzhify.woolwarsutilities.voicegroup.listeners.GameStateListener;
@@ -80,6 +81,7 @@ public final class WoolWarsUtilities extends JavaPlugin {
                 getLogger().info("Registered LevelPlaceholder with PlaceholderAPI");
             }
             getServer().getPluginManager().registerEvents(new LevelListener(), this);
+            getCommand("wwlevel").setExecutor(new LevelCommand());
         }
     }
 
