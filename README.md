@@ -14,7 +14,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **WoolWars Utilities** 是一款专为 **羊毛战争（WoolWars)** 设计的工具插件，依赖于 **WoolWars**, **PlaceholderAPI**, **voicechat（可选）** 插件。
 - **部分代码由 AI 辅助实现，请自行辨别。**
-- 本仓库**不提供** WoolWars 插件下载，请前往 [SpigotMC]((https://www.spigotmc.org/resources/wool-wars-%E2%AD%95-custom-kits-and-abilities-%E2%AD%90-power-ups-%E2%AD%90-jump-pads-%E2%AD%90-portals-%E2%9C%85-1-8-1-21-10.105548/)), [PolyMart](https://polymart.org/product/2551/wool-wars-1-8-1-21-10), [BuiltByBit](https://builtbybit.com/resources/wool-wars-lets-battle-for-the-wool.25971/) 购买本体插件！
+- 本仓库**不提供** WoolWars 插件下载，请前往 [SpigotMC](https://www.spigotmc.org/resources/wool-wars-%E2%AD%95-custom-kits-and-abilities-%E2%AD%90-power-ups-%E2%AD%90-jump-pads-%E2%AD%90-portals-%E2%9C%85-1-8-1-21-10.105548/), [PolyMart](https://polymart.org/product/2551/wool-wars-1-8-1-21-10), [BuiltByBit](https://builtbybit.com/resources/wool-wars-lets-battle-for-the-wool.25971/) 购买本体插件！
 ---
 
 ## 功能
