@@ -1,6 +1,7 @@
-package me.chengzhify.woolwarsutilities.levelsystem;
+package me.chengzhify.woolwarsutilities.levelsystem.storage;
 
 import me.chengzhify.woolwarsutilities.WoolWarsUtilities;
+import me.chengzhify.woolwarsutilities.levelsystem.display.LevelFormatter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -30,12 +31,14 @@ public class LevelManager {
                 if (rs.next()) {
                     int level = rs.getInt("level");
                     int exp = rs.getInt("exp");
-                    cache.put(uuid, new LevelData(level, exp));
+                    String icon = rs.getString("icon");
+                    cache.put(uuid, new LevelData(level, exp, icon));
                 } else {
-                    cache.put(uuid, new LevelData(1, 0));
-                    PreparedStatement insert = conn.prepareStatement("INSERT INTO woolwars_levels (uuid,name,level,exp) VALUES (?,?,1,0)");
+                    cache.put(uuid, new LevelData(1, 0, "✫"));
+                    PreparedStatement insert = conn.prepareStatement("INSERT INTO woolwars_levels (uuid, name, level, exp, icon) VALUES (?,?,1,0,?)");
                     insert.setString(1, uuid.toString());
                     insert.setString(2, player.getName());
+                    insert.setString(3, "✫");
                     insert.executeUpdate();
                 }
             } catch (SQLException e) {
@@ -57,13 +60,15 @@ public class LevelManager {
                         if (rs.next()) {
                             int level = rs.getInt("level");
                             int exp = rs.getInt("exp");
-                            data = new LevelData(level, exp);
+                            String icon = rs.getString("icon");
+                            data = new LevelData(level, exp, icon);
                         } else {
-                            data = new LevelData(1, 0);
+                            data = new LevelData(1, 0, "✫");
                             try (PreparedStatement insert = conn.prepareStatement(
-                                    "INSERT INTO woolwars_levels (uuid, name, level, exp) VALUES (?, ?, 1, 0)")) {
+                                    "INSERT INTO woolwars_levels (uuid, name, level, exp, icon) VALUES (?, ?, ?, 1, 0)")) {
                                 insert.setString(1, uuid.toString());
                                 insert.setString(2, name);
+                                insert.setString(3, "✫");
                                 insert.executeUpdate();
                             }
                         }
@@ -94,11 +99,12 @@ public class LevelManager {
         Bukkit.getScheduler().runTaskAsynchronously(WoolWarsUtilities.getInstance(), () -> {
             try {
                 var conn = MySQLManager.getConnection();
-                PreparedStatement ps = conn.prepareStatement("UPDATE woolwars_levels SET level=?, exp=?, name=? WHERE uuid=?");
+                PreparedStatement ps = conn.prepareStatement("UPDATE woolwars_levels SET level=?, exp=?, name=?, icon = ? WHERE uuid=?");
                 ps.setInt(1, data.getLevel());
                 ps.setInt(2, data.getExp());
                 ps.setString(3, player.getName());
-                ps.setString(4, uuid.toString());
+                ps.setString(5, uuid.toString());
+                ps.setString(4, data.getIcon());
                 ps.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -113,12 +119,13 @@ public class LevelManager {
             try {
                 var conn = MySQLManager.getConnection();
                 PreparedStatement ps = conn.prepareStatement(
-                        "UPDATE woolwars_levels SET level = ?, exp = ?, name = ? WHERE uuid = ?"
+                        "UPDATE woolwars_levels SET level = ?, exp = ?, name = ?, icon = ? WHERE uuid = ?"
                 );
                 ps.setInt(1, data.getLevel());
                 ps.setInt(2, data.getExp());
                 ps.setString(3, name);
-                ps.setString(4, uuid.toString());
+                ps.setString(5, uuid.toString());
+                ps.setString(4, data.getIcon());
                 ps.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -135,12 +142,13 @@ public class LevelManager {
             try {
                 var conn = MySQLManager.getConnection();
                 PreparedStatement ps = conn.prepareStatement(
-                        "UPDATE woolwars_levels SET level = ?, exp = ?, name = ? WHERE uuid = ?"
+                        "UPDATE woolwars_levels SET level = ?, exp = ?, name = ?, icon = ? WHERE uuid = ?"
                 );
                 ps.setInt(1, data.getLevel());
                 ps.setInt(2, data.getExp());
                 ps.setString(3, name);
-                ps.setString(4, uuid.toString());
+                ps.setString(5, uuid.toString());
+                ps.setString(4, data.getIcon());
                 ps.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -167,30 +175,25 @@ public class LevelManager {
         UUID uuid = player.getUniqueId();
         LevelData data = cache.get(uuid);
         if (data == null) {
-            data = new LevelData(1, 0);
+            data = new LevelData(1, 0, "✫");
             cache.put(uuid, data);
         }
         int before = data.getLevel();
         data.addExp(amount);
-        if (data.getLevel() > before) {
-            LevelData finalData = data;
-            Bukkit.getScheduler().runTask(WoolWarsUtilities.getInstance(), () -> {
-                player.sendMessage("§a已升级! 你现在的等级为 " + LevelFormatter.getColoredLevel(finalData.getLevel()));
-            });
-        }
     }
 
 
     public static void saveAllSync() {
         try {
             var conn = MySQLManager.getConnection();
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO woolwars_levels (uuid,name,level,exp) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE name=VALUES(name), level=VALUES(level), exp=VALUES(exp)");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO woolwars_levels (uuid,name,level,exp,icon) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE name=VALUES(name), level=VALUES(level), exp=VALUES(exp), icon=VALUES(icon)");
             for (Map.Entry<UUID, LevelData> e : cache.entrySet()) {
                 ps.setString(1, e.getKey().toString());
                 Player p = WoolWarsUtilities.getInstance().getServer().getPlayer(e.getKey());
                 ps.setString(2, p != null ? p.getName() : "Unknown");
                 ps.setInt(3, e.getValue().getLevel());
                 ps.setInt(4, e.getValue().getExp());
+                ps.setString(5, e.getValue().getIcon());
                 ps.addBatch();
             }
             ps.executeBatch();

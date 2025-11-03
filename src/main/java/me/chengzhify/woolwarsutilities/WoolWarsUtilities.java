@@ -2,10 +2,11 @@ package me.chengzhify.woolwarsutilities;
 
 import de.maxhenkel.voicechat.api.BukkitVoicechatService;
 import me.chengzhify.woolwarsutilities.commands.MainCommand;
-import me.chengzhify.woolwarsutilities.levelsystem.LevelFormatter;
-import me.chengzhify.woolwarsutilities.levelsystem.LevelManager;
-import me.chengzhify.woolwarsutilities.levelsystem.LevelPlaceholder;
-import me.chengzhify.woolwarsutilities.levelsystem.MySQLManager;
+import me.chengzhify.woolwarsutilities.levelsystem.display.LevelFormatter;
+import me.chengzhify.woolwarsutilities.levelsystem.listeners.InvClickListener;
+import me.chengzhify.woolwarsutilities.levelsystem.storage.LevelManager;
+import me.chengzhify.woolwarsutilities.levelsystem.display.LevelPlaceholder;
+import me.chengzhify.woolwarsutilities.levelsystem.storage.MySQLManager;
 import me.chengzhify.woolwarsutilities.levelsystem.commands.LevelCommand;
 import me.chengzhify.woolwarsutilities.levelsystem.listeners.LevelListener;
 import me.chengzhify.woolwarsutilities.voicegroup.VoicechatImpl;
@@ -82,9 +83,10 @@ public final class WoolWarsUtilities extends JavaPlugin {
                 getLogger().info("Registered LevelPlaceholder with PlaceholderAPI");
             }
             getServer().getPluginManager().registerEvents(new LevelListener(), this);
+            getServer().getPluginManager().registerEvents(new InvClickListener(), this);
             getCommand("wwlevel").setExecutor(new LevelCommand());
-            getCommand("wwu").setExecutor(new MainCommand());
         }
+        getCommand("wwu").setExecutor(new MainCommand());
     }
 
 

@@ -1,14 +1,16 @@
-package me.chengzhify.woolwarsutilities.levelsystem;
+package me.chengzhify.woolwarsutilities.levelsystem.storage;
 
 public class LevelData {
 
     private int level;
     private int exp;
+    private String icon;
 
 
-    public LevelData(int level, int exp) {
+    public LevelData(int level, int exp, String icon) {
         this.level = level;
         this.exp = exp;
+        this.icon = icon;
     }
 
 
@@ -21,6 +23,9 @@ public class LevelData {
         return exp;
     }
 
+    public String getIcon() {
+        return icon;
+    }
 
     public void addExp(int amount) {
         exp += amount;
@@ -45,6 +50,10 @@ public class LevelData {
             setExp(0);
             addExp(exp);
         }
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public void reset() {

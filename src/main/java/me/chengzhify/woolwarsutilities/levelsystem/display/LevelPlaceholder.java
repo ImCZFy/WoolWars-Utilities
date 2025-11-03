@@ -1,5 +1,6 @@
-package me.chengzhify.woolwarsutilities.levelsystem;
+package me.chengzhify.woolwarsutilities.levelsystem.display;
 
+import me.chengzhify.woolwarsutilities.levelsystem.storage.LevelManager;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 
@@ -35,9 +36,9 @@ public class LevelPlaceholder extends PlaceholderExpansion {
             case "level":
                 return String.valueOf(data.getLevel());
             case "rank":
-                return LevelFormatter.getColoredLevelWithFrame(data.getLevel());
+                return LevelFormatter.getColoredLevelWithFrame(data.getLevel(), data.getIcon());
             case "star":
-                return LevelFormatter.getColoredLevel(data.getLevel());
+                return LevelFormatter.getColoredLevel(data.getLevel(), data.getIcon());
             case "exp":
                 return String.valueOf(data.getExp());
             case "nextexp":

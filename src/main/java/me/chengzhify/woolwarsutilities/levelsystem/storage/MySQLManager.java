@@ -1,4 +1,4 @@
-package me.chengzhify.woolwarsutilities.levelsystem;
+package me.chengzhify.woolwarsutilities.levelsystem.storage;
 
 import me.chengzhify.woolwarsutilities.WoolWarsUtilities;
 import org.bukkit.Bukkit;
@@ -26,7 +26,8 @@ public class MySQLManager {
                         uuid VARCHAR(36) PRIMARY KEY,
                         name VARCHAR(32),
                         level INT DEFAULT 1,
-                        exp INT DEFAULT 0
+                        exp INT DEFAULT 0,
+                        icon VARCHAR(32) DEFAULT '✫'
                     )
                 """);
             }
@@ -130,6 +131,7 @@ public class MySQLManager {
         }
         return null;
     }
+
 
     public static void disconnect() {
         try {

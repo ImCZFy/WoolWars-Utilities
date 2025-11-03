@@ -19,7 +19,7 @@ mysql:
 
 # level-colors: keys are ranges, values are color codes (use & codes) or "rainbow"
 level-system:
-  icon: "✫"
+  default-icon: "✫"
   level-colors:
     "0-99": "&7"
     "100-199": "&f"

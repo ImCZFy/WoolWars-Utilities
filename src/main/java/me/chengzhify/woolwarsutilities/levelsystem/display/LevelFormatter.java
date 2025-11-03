@@ -1,4 +1,4 @@
-package me.chengzhify.woolwarsutilities.levelsystem;
+package me.chengzhify.woolwarsutilities.levelsystem.display;
 
 import me.chengzhify.woolwarsutilities.WoolWarsUtilities;
 import org.bukkit.ChatColor;
@@ -14,7 +14,6 @@ public class LevelFormatter {
 
 
     private static final Map<String, String> colorRanges = new LinkedHashMap<>();
-    private static final String icon = WoolWarsUtilities.getInstance().getConfig().getString("level-system.icon");
 
     public static void loadColors(JavaPlugin plugin) {
         colorRanges.clear();
@@ -28,7 +27,7 @@ public class LevelFormatter {
 
 
 
-    public static String getColoredLevel(int level) {
+    public static String getColoredLevel(int level, String defaultIcon) {
         for (Map.Entry<String, String> entry : colorRanges.entrySet()) {
             String range = entry.getKey();
             String colorCode = entry.getValue();
@@ -39,24 +38,24 @@ public class LevelFormatter {
                 int min = Integer.parseInt(split[0]);
                 int max = Integer.parseInt(split[1]);
                 if (level >= min && level <= max) {
-                    return ChatColor.translateAlternateColorCodes('&', colorCode + level + icon);
+                    return ChatColor.translateAlternateColorCodes('&', colorCode + level + defaultIcon);
                 }
             } else if (range.endsWith("+")) {
                 int min = Integer.parseInt(range.replace("+", ""));
                 if (level >= min) {
                     if ("rainbow".equalsIgnoreCase(colorCode)) {
-                        return getRainbow(level + icon);
+                        return getRainbow(level + defaultIcon);
                     } else {
-                        return ChatColor.translateAlternateColorCodes('&', colorCode + level + icon);
+                        return ChatColor.translateAlternateColorCodes('&', colorCode + level + defaultIcon);
                     }
                 }
             }
         }
-        return ChatColor.GRAY + "" + level + icon;
+        return ChatColor.GRAY + "" + level + defaultIcon;
     }
 
 
-    public static String getColoredLevelWithFrame(int level) {
+    public static String getColoredLevelWithFrame(int level,  String defaultIcon) {
         for (Map.Entry<String, String> entry : colorRanges.entrySet()) {
             String range = entry.getKey();
             String colorCode = entry.getValue();
@@ -67,20 +66,20 @@ public class LevelFormatter {
                 int min = Integer.parseInt(split[0]);
                 int max = Integer.parseInt(split[1]);
                 if (level >= min && level <= max) {
-                    return ChatColor.translateAlternateColorCodes('&', colorCode + "[" + level + icon + "]");
+                    return ChatColor.translateAlternateColorCodes('&', colorCode + "[" + level + defaultIcon + "]");
                 }
             } else if (range.endsWith("+")) {
                 int min = Integer.parseInt(range.replace("+", ""));
                 if (level >= min) {
                     if ("rainbow".equalsIgnoreCase(colorCode)) {
-                        return getRainbow("[" + level + icon + "]");
+                        return getRainbow("[" + level + defaultIcon + "]");
                     } else {
-                        return ChatColor.translateAlternateColorCodes('&', colorCode + "[" + level + icon + "]");
+                        return ChatColor.translateAlternateColorCodes('&', colorCode + "[" + level + defaultIcon + "]");
                     }
                 }
             }
         }
-        return ChatColor.GRAY + "[" + level + icon + "]";
+        return ChatColor.GRAY + "[" + level + defaultIcon + "]";
     }
 
     private static String getRainbow(String text) {
